@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const existingWebsiteId = request.cookies.get("websiteId")?.value;
+  // const existingWebsiteId = request.cookies.get("websiteId")?.value;
 
-  // ✅ Reuse cookie if already exists
-  if (existingWebsiteId) {
-    return NextResponse.next();
-  }
+  // Reuse cookie if already exists
+  // if (existingWebsiteId) {
+  //   return NextResponse.next();
+  // }
 
   // Extract hostname and sanitize
   const hostname = request.headers.get("host") || "";

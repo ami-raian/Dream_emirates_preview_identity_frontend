@@ -11,13 +11,14 @@ export async function middleware(request: NextRequest) {
 
   // Extract hostname and sanitize
   const hostname = request.headers.get("host") || "";
-  const domain = hostname.replace(/^www\./, "") || "taghyeer.ai";
+  const domain = hostname.replace(/^www\./, "");
 
   try {
     const res = await fetch(
-      // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=${domain}`
-      `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=taghyeer.ai`
+      `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=${domain}`
     );
+
+    // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=taghyeer.ai`;
 
     const data = await res.json();
 

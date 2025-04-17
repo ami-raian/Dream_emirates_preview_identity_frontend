@@ -32,8 +32,12 @@ export default function HomeClient() {
   const { data: myWebsite, isPending: websiteLoading } =
     useGetWebsiteByUid(websiteId);
 
-  const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any =
-    useGetPublicBusinessById(websiteInfo?.businessId ?? null);
+  // const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any =
+  //   useGetPublicBusinessById(websiteInfo?.businessId ?? null);
+  const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any = {
+    data: null,
+    isPending: false,
+  };
 
   console.log({ websiteId });
   console.log({ myWebsite });

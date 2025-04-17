@@ -18,7 +18,7 @@ export function Header({
             {/* Logo */}
             <div className="w-16 h-16 relative rounded-full overflow-hidden bg-white/5 border border-white/10">
               <Image
-                src={logo || "/avatar1.jpg"}
+                src={logo || "/avatar-default.png"}
                 alt="Website Logo"
                 fill
                 className="object-contain"

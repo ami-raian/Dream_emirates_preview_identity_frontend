@@ -197,7 +197,7 @@ export function LineChart({
     <div className="relative w-full h-full">
       <canvas
         ref={canvasRef}
-        width={300}
+        width={350}
         height={64}
         className="w-full h-full"
       />

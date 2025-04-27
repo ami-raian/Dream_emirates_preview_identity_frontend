@@ -38,7 +38,7 @@ export function PriceDisplay({
     const wsUrl = process.env.NEXT_PUBLIC_WS_URL;
 
     if (!wsUrl) {
-      console.error("Missing WebSocket URL (env NEXT_PUBLIC_WS_URL)");
+      console.log("Missing WebSocket URL (env NEXT_PUBLIC_WS_URL)");
       return;
     }
 

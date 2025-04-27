@@ -118,7 +118,7 @@ export function LineChart({
     ctx.stroke();
 
     // Draw the latest value in the middle of the chart
-    ctx.font = "bold 14px Arial";
+    ctx.font = "13px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
@@ -181,13 +181,13 @@ export function LineChart({
     }
 
     // Draw max value at top of chart
-    ctx.font = "bold 10px Arial";
+    ctx.font = "12px Arial";
     ctx.textAlign = "left";
     ctx.fillStyle = "rgba(34, 197, 94, 1)"; // Green
     ctx.fillText(`Max: ${max.toFixed(2)}`, 5, 12);
 
     // Draw min value at bottom of chart
-    ctx.font = "bold 10px Arial";
+    ctx.font = "12px Arial";
     ctx.textAlign = "left";
     ctx.fillStyle = "rgba(239, 68, 68, 1)"; // Red
     ctx.fillText(`Min: ${min.toFixed(2)}`, 5, height - 5);
@@ -197,7 +197,7 @@ export function LineChart({
     <div className="relative w-full h-full">
       <canvas
         ref={canvasRef}
-        width={300}
+        width={350}
         height={64}
         className="w-full h-full"
       />

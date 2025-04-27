@@ -29,17 +29,20 @@ export default function HomeClient() {
     null
   );
 
+  console.log({ websiteId });
+
   const { data: myWebsite, isPending: websiteLoading } =
     useGetWebsiteByUid(websiteId);
 
-  // const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any =
-  //   useGetPublicBusinessById(websiteInfo?.businessId ?? null);
-  const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any = {
-    data: null,
-    isPending: false,
-  };
+  const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any =
+    useGetPublicBusinessById(websiteInfo?.businessId ?? null);
+  // const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any = {
+  //   data: null,
+  //   isPending: false,
+  // };
 
-  console.log({ websiteId });
+  console.log({ javaApiPublicBusinessInfo });
+
   console.log({ myWebsite });
 
   useEffect(() => {

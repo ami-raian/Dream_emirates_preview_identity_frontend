@@ -15,23 +15,36 @@ export async function middleware(request: NextRequest) {
 
   try {
     const res = await fetch(
-      `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=${domain}`
+      // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=${domain}`
+      `https://backend.staging.identity.dreamemirates.com/api/websites?filter=[[["domain.name","eq","${domain}"]]]&page=1&length=10`
     );
 
     // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=taghyeer.ai`;
 
-    const data = await res.json();
+    const result = await res.json();
 
-    if (data?.status && data?.data?.websiteId) {
-      const websiteId = data.data.websiteId;
+    console.log(result, "response from backend");
 
-      const response = NextResponse.next();
-      response.cookies.set("websiteId", String(websiteId), {
-        path: "/",
-        httpOnly: false,
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-      return response;
+    // Check if success is true and data array has at least one item
+    if (
+      result?.success &&
+      Array.isArray(result?.data) &&
+      result.data.length > 0
+    ) {
+      const websiteData = result.data[0];
+      const websiteId = websiteData.id;
+
+      if (websiteId) {
+        console.log({ websiteId });
+
+        const response = NextResponse.next();
+        response.cookies.set("websiteId", String(websiteId), {
+          path: "/",
+          httpOnly: false, // frontend needs to access it
+          maxAge: 60 * 60 * 24, // 1 day
+        });
+        return response;
+      }
     }
   } catch (e) {
     console.error("Error in middleware:", e);

@@ -2,27 +2,19 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  // const existingWebsiteId = request.cookies.get("websiteId")?.value;
-
-  // Reuse cookie if already exists
-  // if (existingWebsiteId) {
-  //   return NextResponse.next();
-  // }
-
   // Extract hostname and sanitize
   const hostname = request.headers.get("host") || "";
   const domain = hostname.replace(/^www\./, "");
 
+  console.log({ hostname, domain });
+
   try {
     const res = await fetch(
-      // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=${domain}`
-      `https://backend.staging.identity.dreamemirates.com/api/websites?filter=[[["domain.name","eq","${domain}"]]]&page=1&length=10`
+      // `https://backend.staging.identity.dreamemirates.com/api/websites?filter=[[["domain.name","eq","${domain}"]]]&page=1&length=10`,
+      `${process.env.NEXT_PUBLIC_API_URL}/websites?filter=[[["domain.name","eq","${domain}"]]]&page=1&length=10`
     );
 
-    // `https://backend.staging.identity.dreamemirates.com/api/domain/info?name=taghyeer.ai`;
-
     const result = await res.json();
-
     console.log(result, "response from backend");
 
     // Check if success is true and data array has at least one item

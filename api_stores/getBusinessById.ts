@@ -13,6 +13,7 @@ export const useGetPublicBusinessById = (businessId: string | null) => {
   return useQuery<any>({
     queryKey: ["getBusinessById", businessId],
     queryFn: () => fetchGet(`business-svc/business/public/${businessId}`),
+    retry: false,
     enabled: !!businessId,
   });
 };

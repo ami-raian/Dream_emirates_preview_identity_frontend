@@ -29,6 +29,7 @@ const GoldTemplateOne = ({
   webInfo: WebsiteDataType | any;
   javaApiBusinessInfo: any;
 }) => {
+  console.log({ webInfo }, "This is all data i think");
   return (
     <div className="bg-[#00072d] min-h-screen">
       <main className="container mx-auto px-8 py-8 space-y-8">

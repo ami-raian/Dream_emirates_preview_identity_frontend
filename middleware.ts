@@ -25,12 +25,23 @@ export async function middleware(request: NextRequest) {
     ) {
       const websiteData = result.data[0];
       const websiteId = websiteData.id;
+      const websiteDomain = websiteData?.domain?.name;
 
-      if (websiteId) {
+      console.log({ websiteId });
+      console.log({ websiteDomain });
+
+      if (websiteId && websiteDomain) {
+        // Set cookies for websiteId and websiteDomain
         console.log({ websiteId });
+        console.log({ websiteDomain });
 
         const response = NextResponse.next();
         response.cookies.set("websiteId", String(websiteId), {
+          path: "/",
+          httpOnly: false, // frontend needs to access it
+          maxAge: 60 * 60 * 24, // 1 day
+        });
+        response.cookies.set("websiteDomain", String(websiteDomain), {
           path: "/",
           httpOnly: false, // frontend needs to access it
           maxAge: 60 * 60 * 24, // 1 day

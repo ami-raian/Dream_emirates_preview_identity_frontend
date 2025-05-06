@@ -64,7 +64,7 @@ export function ProductList({ webInfo }: any) {
 
   // Static data from API:
   const { jewellery22k, gold9999Gm, gold9999Kg, tenTola, kilobar995 } =
-    webInfo ?? {};
+    webInfo?.[0] ?? {};
 
   const decimalPlace = 2;
   const dynamicProducts = [

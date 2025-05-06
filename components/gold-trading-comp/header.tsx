@@ -23,7 +23,8 @@ export function Header({
             <div className="w-16 h-16 relative rounded-full overflow-hidden bg-white/5 border border-white/10">
               {logo ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL2}/media-svc/image/get-presigned-url/${logo}`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL2}/media-svc/public/image/get-presigned-url/${logo}`}
+                  // https://staging.keycloak.dreamemirates.com/api/v1/media-svc/image/get-presigned-url/f2a3ac3f-478f-4406-84ae-d678c8d4fec6.png
                   alt="Website Logo"
                   fill
                   className="object-contain"

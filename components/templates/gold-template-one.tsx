@@ -30,22 +30,28 @@ const GoldTemplateOne = ({
   javaApiBusinessInfo: any;
 }) => {
   console.log({ webInfo }, "This is all data i think");
+  const {
+    askPriceModification,
+    bidPriceModification,
+    businessProfilePhoto,
+    businessName,
+  } = webInfo?.[0];
+
+  console.log(businessProfilePhoto, businessName, "This is the logo and name");
+
   return (
     <div className="bg-[#00072d] min-h-screen">
       <main className="container mx-auto px-8 py-8 space-y-8">
         {/* Headers logo and name from Java-Backend: */}
-        <Header
-          websiteName={javaApiBusinessInfo?.data?.name}
-          logo={javaApiBusinessInfo?.data?.profilePhoto}
-        />
+        <Header websiteName={businessName} logo={businessProfilePhoto} />
         <PriceDisplay
-          askPriceModification={webInfo?.askPriceModification}
-          bidPriceModification={webInfo?.bidPriceModification}
+          askPriceModification={askPriceModification}
+          bidPriceModification={bidPriceModification}
         />
         <div className="grid grid-cols-2 gap-8">
           <PriceHistory
-            askPriceModification={webInfo?.askPriceModification}
-            bidPriceModification={webInfo?.bidPriceModification}
+            askPriceModification={askPriceModification}
+            bidPriceModification={bidPriceModification}
           />
           <ProductList webInfo={webInfo} />
         </div>

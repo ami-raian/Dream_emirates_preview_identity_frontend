@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { PriceProvider } from "@/contexts/price-context";
-import { useWebsiteId } from "@/lib/WebsiteContext";
+import { useWebsiteContext } from "@/lib/WebsiteContext";
 import CommonLoading from "@/components/common/CommonLading";
 import GoldTemplateOne from "@/components/templates/gold-template-one";
 import GoldTemplateTwo from "@/components/templates/gold-template-two";
 import { useGetWebsiteByUid } from "@/api_stores/getWebsiteByUid";
 import { useGetPublicBusinessById } from "@/api_stores/getBusinessById";
+import { useGetWebsiteByDomain } from "@/api_stores/getAllDataByDomain";
 
 interface WebsiteDynamicProps {
   businessId: string | null;
@@ -24,15 +25,18 @@ interface WebsiteDynamicProps {
 }
 
 export default function HomeClient() {
-  const { websiteId } = useWebsiteId();
+  const { websiteId, websiteDomain } = useWebsiteContext();
   const [websiteInfo, setWebsiteInfo] = useState<WebsiteDynamicProps | null>(
     null
   );
 
-  console.log({ websiteId });
+  console.log({ websiteId, websiteDomain });
 
   const { data: myWebsite, isPending: websiteLoading } =
     useGetWebsiteByUid(websiteId);
+
+  const { data: domainData, isPending: domainLoading } =
+    useGetWebsiteByDomain(websiteDomain);
 
   const { data: javaApiPublicBusinessInfo, isPending: businessLoading }: any =
     useGetPublicBusinessById(websiteInfo?.businessId ?? null);
@@ -44,6 +48,7 @@ export default function HomeClient() {
   console.log({ javaApiPublicBusinessInfo });
 
   console.log({ myWebsite });
+  console.log({ domainData });
 
   useEffect(() => {
     if (myWebsite?.message === "Website retrieved successfully") {
@@ -59,7 +64,7 @@ export default function HomeClient() {
         <CommonLoading />
       ) : process.env.NEXT_PUBLIC_TEMPLATE_ONE === websiteInfo?.templateId ? (
         <GoldTemplateOne
-          webInfo={websiteInfo}
+          webInfo={domainData}
           javaApiBusinessInfo={javaApiPublicBusinessInfo}
         />
       ) : process.env.NEXT_PUBLIC_TEMPLATE_TWO === websiteInfo?.templateId ? (

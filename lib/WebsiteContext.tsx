@@ -1,9 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const WebsiteContext = createContext<{ websiteId: string | null }>({
+type WebsiteContextType = {
+  websiteId: string | null;
+  websiteDomain: string | null;
+};
+
+const WebsiteContext = createContext<WebsiteContextType>({
   websiteId: null,
+  websiteDomain: null,
 });
 
 export const WebsiteProvider = ({
@@ -12,25 +18,32 @@ export const WebsiteProvider = ({
   children: React.ReactNode;
 }) => {
   const [websiteId, setWebsiteId] = useState<string | null>(null);
+  const [websiteDomain, setWebsiteDomain] = useState<string | null>(null);
 
   useEffect(() => {
-    const cookieValue = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("websiteId="))
-      ?.split("=")[1];
+    const cookies = document.cookie.split("; ");
 
-    if (cookieValue) {
-      setWebsiteId(cookieValue);
+    const websiteIdCookie = cookies.find((c) => c.startsWith("websiteId="));
+    const websiteDomainCookie = cookies.find((c) =>
+      c.startsWith("websiteDomain=")
+    );
+
+    if (websiteIdCookie) {
+      const value = websiteIdCookie.split("=")[1];
+      setWebsiteId(decodeURIComponent(value));
+    }
+
+    if (websiteDomainCookie) {
+      const value = websiteDomainCookie.split("=")[1];
+      setWebsiteDomain(decodeURIComponent(value));
     }
   }, []);
 
-  console.log({ websiteId });
-
   return (
-    <WebsiteContext.Provider value={{ websiteId }}>
+    <WebsiteContext.Provider value={{ websiteId, websiteDomain }}>
       {children}
     </WebsiteContext.Provider>
   );
 };
 
-export const useWebsiteId = () => useContext(WebsiteContext);
+export const useWebsiteContext = () => useContext(WebsiteContext);

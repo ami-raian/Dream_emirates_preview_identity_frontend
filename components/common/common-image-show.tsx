@@ -1,80 +1,36 @@
-// import Image from "next/image";
-// import { cn } from "../lib/utils";
-// import { Skeleton } from "../ui/skeleton";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { commonImageFunction } from "@/api_stores/queries/common-queries";
+import Image from "next/image";
+import { commonImageFunction } from "@/api_stores/common-queries";
 
-// type Props = {
-//   fileName?: string;
-//   className?: string;
-//   height?: number;
-//   width?: number;
-//   type?: "avatar";
-//   isLoading?: boolean;
-// };
+type Props = {
+  fileName?: string;
+  className?: string;
+  height?: number;
+  width?: number;
+  type?: "avatar";
+  isLoading?: boolean;
+};
 
-// const CommonImageShow = ({
-//   fileName,
-//   className,
-//   height = 256,
-//   width = 256,
-//   type,
-//   isLoading = false,
-// }: Props) => {
-//   const { data, isLoading: isImageLoading } = commonImageFunction(fileName);
+const CommonImageShow = ({ fileName, height = 256, width = 256 }: Props) => {
+  const { data, isLoading: isImageLoading } = commonImageFunction(fileName);
+  const imageSrc = data?.message ? data.message : "/avatar-default.png";
 
-//   const loading = isLoading || isImageLoading;
+  return (
+    <div className="relative overflow-hidden rounded-md">
+      {isImageLoading ? (
+        <div className="absolute inset-0 flex justify-center items-center z-50">
+          <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <Image
+          src={imageSrc}
+          alt="Image"
+          width={width}
+          height={height}
+          className="h-full w-full object-contain"
+        />
+      )}
+    </div>
+  );
+};
 
-//   const rawUrl = data?.message;
-
-//   // Validate image URL before using it
-//   const isValidImageUrl =
-//     typeof rawUrl === "string" &&
-//     (rawUrl.startsWith("http://") ||
-//       rawUrl.startsWith("https://") ||
-//       rawUrl.startsWith("/"));
-
-//   const imageUrl = isValidImageUrl
-//     ? rawUrl
-//     : type === "avatar"
-//     ? "/avatar-default.png"
-//     : "/not-found.png";
-
-//   if (type === "avatar") {
-//     return (
-//       <Avatar className={cn("h-10 w-10", className)}>
-//         {loading ? (
-//           <Skeleton className="h-10 w-10 rounded-full" />
-//         ) : (
-//           <>
-//             <AvatarImage
-//               src={imageUrl ? imageUrl : "/avatar1.jpg"}
-//               alt="Avatar"
-//             />
-//             <AvatarFallback>
-//               <Skeleton className="h-10 w-10 rounded-full" />
-//             </AvatarFallback>
-//           </>
-//         )}
-//       </Avatar>
-//     );
-//   }
-
-//   return (
-//     <div className={cn("relative overflow-hidden rounded-md", className)}>
-//       {loading ? (
-//         <Skeleton className={cn("h-full w-full", className)} />
-//       ) : (
-//         <Image
-//           src={imageUrl ? imageUrl : "/avatar1.jpg"}
-//           alt="Image"
-//           width={width}
-//           height={height}
-//           className={cn("h-full w-full object-contain", className)}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CommonImageShow;
+export default CommonImageShow;

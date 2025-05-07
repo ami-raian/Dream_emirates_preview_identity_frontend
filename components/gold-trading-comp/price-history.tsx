@@ -125,14 +125,18 @@ export function PriceHistory({
                     <td className="text-right py-2">
                       {bidPriceModification?.modificationType.toLowerCase() ===
                       "discount"
-                        ? (price.bid - bidPriceModification.amount).toFixed(2)
-                        : (price.bid + bidPriceModification.amount).toFixed(2)}
+                        ? (price.bid - bidPriceModification?.amount).toFixed(2)
+                        : (price.bid + bidPriceModification?.amount).toFixed(2)}
                     </td>
                     <td className="text-right py-2">
-                      {askPriceModification?.modificationType.toLowerCase() ===
+                      {askPriceModification?.modificationType?.toLowerCase() ===
                       "discount"
-                        ? (price.ask - askPriceModification.amount).toFixed(2)
-                        : (price.ask + askPriceModification.amount).toFixed(2)}
+                        ? (
+                            price.ask - (askPriceModification?.amount ?? 0)
+                          ).toFixed(2)
+                        : (
+                            price.ask + (askPriceModification?.amount ?? 0)
+                          ).toFixed(2)}
                     </td>
                   </tr>
                 ))

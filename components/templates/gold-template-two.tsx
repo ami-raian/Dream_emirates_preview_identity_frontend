@@ -9,29 +9,40 @@ import StarryNight from "../gold-trading-comp/StarryNight";
 import { WebsiteDataType } from "./gold-template-one";
 
 const GoldTemplateTwo = ({
-  webInfo,
-  javaApiBusinessInfo,
-}: {
-  webInfo: WebsiteDataType | any;
-  javaApiBusinessInfo: any;
+  webInfo = [],
+}: // javaApiBusinessInfo,
+{
+  webInfo: WebsiteDataType[] | any;
+  // javaApiBusinessInfo: any;
 }) => {
+  console.log({ webInfo }, "This is all data i think template 2");
+  const websiteData = webInfo?.[0];
+
+  const {
+    askPriceModification,
+    bidPriceModification,
+    businessProfilePhoto,
+    businessName,
+  } = websiteData || {};
+
+  console.log(
+    businessProfilePhoto,
+    businessName,
+    "This is the logo and name template 2"
+  );
   return (
     <div className="bg-[#000000] min-h-screen">
       <StarryNight />
       <main className="container mx-auto px-8 py-8 space-y-8 relative z-10">
-        {/* Headers logo and name from Java-Backend: */}
-        <Header
-          websiteName={javaApiBusinessInfo?.data?.name}
-          logo={javaApiBusinessInfo?.data?.profilePhoto}
-        />
+        <Header websiteName={businessName} logo={businessProfilePhoto} />
         <PriceDisplay
-          askPriceModification={webInfo?.askPriceModification}
-          bidPriceModification={webInfo?.bidPriceModification}
+          askPriceModification={askPriceModification}
+          bidPriceModification={bidPriceModification}
         />
         <div className="grid grid-cols-2 gap-8">
           <PriceHistory
-            askPriceModification={webInfo?.askPriceModification}
-            bidPriceModification={webInfo?.bidPriceModification}
+            askPriceModification={askPriceModification}
+            bidPriceModification={bidPriceModification}
           />
           <ProductList webInfo={webInfo} />
         </div>
